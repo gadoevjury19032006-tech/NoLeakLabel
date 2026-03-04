@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game store - Магазин игровых аккаунтов</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="animated-bg"></div>
+    <div class="floating-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+        <div class="shape shape5"></div>
+    </div>
+
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <div class="notification-content">
+            <div class="notification-title" id="notificationTitle">Успешно!</div>
+            <div class="notification-text" id="notificationMessage"></div>
+        </div>
+        <button class="notification-close" onclick="hideNotification()">×</button>
+    </div>
+
+    <!-- Корзина -->
+    <div class="cart-counter" id="cartCounter" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartCount">0</span>
+    </div>
+
+    <!-- Модальное окно корзины -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Товары будут добавляться сюда -->
+        </div>
+        <div class="cart-total">
+            <span>Итого:</span>
+            <span class="cart-total-price" id="cartTotal">0 ₽</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">
+            <i class="fas fa-credit-card"></i> Оформить заказ
+        </button>
+    </div>
+
+    <!-- Модальное окно авторизации -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <button class="auth-close" onclick="closeAuthModal()">×</button>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Вход</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Регистрация</button>
+            </div>
+            
+            <!-- Форма входа -->
+            <div class="auth-form active" id="loginForm">
+                <h2>Добро пожаловать!</h2>
+                <p class="auth-subtitle">Войдите в свой аккаунт PlayStation Store</p>
+                
+                <div class="auth-input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="auth-input" id="loginEmail" placeholder="Email" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="auth-input" id="loginPassword" placeholder="Пароль" required>
+                </div>
+                
+                <div class="auth-options">
+                    <label class="auth-checkbox">
+                        <input type="checkbox"> Запомнить меня
+                    </label>
+                    <a href="#" class="auth-forgot">Забыли пароль?</a>
+                </div>
+                
+                <button class="auth-submit" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Войти
+                </button>
+                
+                <div class="auth-divider">
+                    <span>или войти с помощью</span>
+                </div>
+                
+                <div class="auth-social">
+                    <button class="auth-social-btn" onclick="socialLogin('google')">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="auth-social-btn" onclick="socialLogin('vk')">
+                        <i class="fab fa-vk"></i>
+                    </button>
+                    <button class="auth-social-btn" onclick="socialLogin('discord')">
+                        <i class="fab fa-discord"></i>
+                    </button>
+                </div>
+                
+                <div class="auth-switch">
+                    Нет аккаунта?
+                    <a onclick="switchAuthTab('register')">Зарегистрироваться</a>
+                </div>
+            </div>
+            
+            <!-- Форма регистрации -->
+            <div class="auth-form" id="registerForm">
+                <h2>Создать аккаунт</h2>
+                <p class="auth-subtitle">Присоединяйтесь к Game store</p>
+                
+                <div class="auth-input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="auth-input" id="registerName" placeholder="Имя" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="auth-input" id="registerEmail" placeholder="Email" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="auth-input" id="registerPassword" placeholder="Пароль" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="auth-input" id="registerConfirmPassword" placeholder="Подтвердите пароль" required>
+                </div>
+                
+                <label class="auth-checkbox" style="margin-bottom: 20px;">
+                    <input type="checkbox" id="agreeTerms"> 
+                    Я согласен с <a href="#" style="color: #4da8ff;">условиями использования</a>
+                </label>
+                
+                <button class="auth-submit" onclick="register()">
+                    <i class="fas fa-user-plus"></i>
+                    Зарегистрироваться
+                </button>
+                
+                <div class="auth-divider">
+                    <span>или зарегистрироваться через</span>
+                </div>
+                
+                <div class="auth-social">
+                    <button class="auth-social-btn" onclick="socialLogin('google')">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="auth-social-btn" onclick="socialLogin('vk')">
+                        <i class="fab fa-vk"></i>
+                    </button>
+                    <button class="auth-social-btn" onclick="socialLogin('discord')">
+                        <i class="fab fa-discord"></i>
+                    </button>
+                </div>
+                
+                <div class="auth-switch">
+                    Уже есть аккаунт?
+                    <a onclick="switchAuthTab('login')">Войти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-play-circle"></i>
+                Game Store
+            </a>
+            
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link active">Главная</a>
+                <a href="catalog.html" class="nav-link">Каталог</a>
+                <a href="tovary.html" class="nav-link">Товары</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
+                
+                <!-- Блок авторизации -->
+                <div id="authBlock"></div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero секция -->
+        <section class="hero">
+            <h1>Game Store</h1>
+            <p class="hero-subtitle">
+                Магазин премиальных игровых аккаунтов с гарантией качества. 
+                Тысячи довольных игроков по всему миру выбирают нас!
+            </p>
+            <div class="hero-buttons">
+                <a href="catalog.html" class="btn btn-primary">
+                    <i class="fas fa-store"></i>
+                    Перейти в каталог
+                </a>
+                <a href="contacts.html" class="btn btn-secondary">
+                    <i class="fas fa-headset"></i>
+                    Связаться с нами
+                </a>
+            </div>
+        </section>
+
+        <!-- Статистика -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">5000+</div>
+                <div class="stat-label">Аккаунтов продано</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Довольных клиентов</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Поддержка</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">90</div>
+                <div class="stat-label">Дней гарантии</div>
+            </div>
+        </div>
+
+        <!-- Категории -->
+        <h2 class="section-title">Категории товаров</h2>
+        
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Игровые аккаунты</h3>
+                <p>Steam, Origin, Epic Games, Uplay, Battle.net и многие другие платформы</p>
+                <a href="catalog.html" class="category-link">
+                    Посмотреть <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-film"></i>
+                </div>
+                <h3>Стриминговые сервисы</h3>
+                <p>Netflix, Spotify, YouTube Premium, Apple Music, Disney+</p>
+                <a href="catalog.html" class="category-link">
+                    Посмотреть <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <h3>Софт и подписки</h3>
+                <p>Microsoft Office, Adobe Creative Cloud, различные VPN сервисы</p>
+                <a href="catalog.html" class="category-link">
+                    Посмотреть <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Популярные товары (обновленные карточки в едином стиле) -->
+        <h2 class="section-title">Популярные товары</h2>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <span class="product-badge">Хит продаж</span>
+                <div class="product-img-wrapper">
+                    <img src="https://avatars.mds.yandex.net/i?id=b27622d00f3923eae7774f310f9e45b8-4012518-images-thumbs&n=13" 
+                         alt="VALORANT" class="product-image">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fas fa-crosshairs"></i> VALORANT
+                    </span>
+                    <h3 class="product-title">VALORANT Премиум</h3>
+                    <p class="product-description">Уровень 50+, 15+ скинов, все агенты, 3 500+ VP</p>
+                    <div class="product-footer">
+                        <span class="product-price">2 499 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('VALORANT Премиум', 2499, 'https://avatars.mds.yandex.net/i?id=b27622d00f3923eae7774f310f9e45b8-4012518-images-thumbs&n=13')">
+                            <i class="fas fa-shopping-cart"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <span class="product-badge">-30%</span>
+                <div class="product-img-wrapper">
+                    <img src="https://images.cybersport.ru/images/og-jpg/plain/f9/f958daf2-c591-4c0e-9873-cad481d2da4a.jpg" 
+                         alt="CS:GO" class="product-image">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fas fa-skull"></i> CS:GO
+                    </span>
+                    <h3 class="product-title">CS:GO Prime LEAGUE</h3>
+                    <p class="product-description">Global Elite, 100+ скинов, Prime статус, 10 000+ часов</p>
+                    <div class="product-footer">
+                        <span class="product-price">3 799 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('CS:GO Prime LEAGUE', 3799, 'https://images.cybersport.ru/images/og-jpg/plain/f9/f958daf2-c591-4c0e-9873-cad481d2da4a.jpg')">
+                            <i class="fas fa-shopping-cart"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <span class="product-badge">Топ</span>
+                <div class="product-img-wrapper">
+                    <img src="https://avatars.mds.yandex.net/i?id=b7f71f1dd6e201be84252f4d4c6525eb1a9ef1f8-12523300-images-thumbs&n=13" 
+                         alt="Steam" class="product-image">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fab fa-steam"></i> Steam
+                    </span>
+                    <h3 class="product-title">Steam Premium</h3>
+                    <p class="product-description">150+ игр, уровень 100+, 5 000+ карт, редкие предметы</p>
+                    <div class="product-footer">
+                        <span class="product-price">12 999 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('Steam Premium', 12999, 'https://avatars.mds.yandex.net/i?id=b7f71f1dd6e201be84252f4d4c6525eb1a9ef1f8-12523300-images-thumbs&n=13')">
+                            <i class="fas fa-shopping-cart"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <span class="product-badge">Новинка</span>
+                <div class="product-img-wrapper">
+                    <img src="https://avatars.mds.yandex.net/i?id=c32de459352b870b44931f54dc4dfbad82dbb4f7-11454708-images-thumbs&n=13" 
+                         alt="Fortnite" class="product-image">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fas fa-fort-awesome"></i> Fortnite
+                    </span>
+                    <h3 class="product-title">Fortnite MAX</h3>
+                    <p class="product-description">MAX уровень, 250+ скинов, 25 000+ V-Bucks, все боевые пропуски</p>
+                    <div class="product-footer">
+                        <span class="product-price">5 499 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('Fortnite MAX', 5499, 'https://avatars.mds.yandex.net/i?id=c32de459352b870b44931f54dc4dfbad82dbb4f7-11454708-images-thumbs&n=13')">
+                            <i class="fas fa-shopping-cart"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Преимущества -->
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Безопасность</h3>
+                <p>Гарантия смены всех данных и защита вашей конфиденциальности</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-bolt"></i>
+                <h3>Моментальная доставка</h3>
+                <p>Получите данные аккаунта сразу после оплаты</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-headset"></i>
+                <h3>Поддержка 24/7</h3>
+                <p>Круглосуточная поддержка клиентов</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Гарантия 90 дней</h3>
+                <p>Возврат средств или замена аккаунта</p>
+            </div>
+        </div>
+
+        <!-- CTA секция -->
+        <div class="cta">
+            <h2>Начните играть сегодня!</h2>
+            <p>Присоединяйтесь к тысячам довольных игроков, которые уже приобрели аккаунты у нас</p>
+            <a href="catalog.html" class="btn btn-primary">
+                <i class="fas fa-rocket"></i>
+                Перейти в каталог
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Game Store</h3>
+                <p>Магазин игровых аккаунтов с гарантией качества и безопасности</p>
+                <div class="social-links">
+                    <a href="#" onclick="showNotification('Discord: discord.gg/playstation')"><i class="fab fa-discord"></i></a>
+                    <a href="#" onclick="showNotification('Telegram: @playstation_store')"><i class="fab fa-telegram"></i></a>
+                    <a href="#" onclick="showNotification('VK: vk.com/playstation_store')"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Навигация</h3>
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="tovary.html">Товары</a>
+                <a href="contacts.html">Контакты</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-envelope" style="color: #4da8ff; margin-right: 10px;"></i> support@playstation.ru</p>
+                <p><i class="fas fa-phone" style="color: #4da8ff; margin-right: 10px;"></i> +7 (999) 123-45-67</p>
+                <p><i class="fas fa-clock" style="color: #4da8ff; margin-right: 10px;"></i> 24/7 поддержка</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2024 PlayStation Store. Все права защищены</p>
+            <p style="font-size: 14px;">Сайт является учебным проектом</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <title>Game Store - Детальное описание товара</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="particles"></div>
+    <div class="floating-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+        <div class="shape shape5"></div>
+    </div>
+
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <div class="notification-content">
+            <div class="notification-title" id="notificationTitle">Успешно!</div>
+            <div class="notification-text" id="notificationMessage"></div>
+        </div>
+        <button class="notification-close" onclick="hideNotification()">×</button>
+    </div>
+
+    <!-- Корзина -->
+    <div class="cart-counter" id="cartCounter" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartCount">0</span>
+    </div>
+
+    <!-- Модальное окно корзины -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Товары будут добавляться сюда -->
+        </div>
+        <div class="cart-total">
+            <span>Итого:</span>
+            <span class="cart-total-price" id="cartTotal">0 ₽</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">
+            <i class="fas fa-credit-card"></i> Оформить заказ
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-play-circle"></i>
+                <span>Game Store</span>
+            </a>
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="tovary.html" class="active">Товары</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Основная карточка товара (без анимации floating) -->
+        <div class="product-card">
+            <h1 class="product-title">VALORANT: Премиум аккаунт (Уровень 50+)</h1>
+            
+            <div class="product-image-wrapper">
+                <img src="https://avatars.mds.yandex.net/i?id=2c8a94d57493815b541a218ab8f2b31dbc317967-5345438-images-thumbs&n=13" 
+                     alt="VALORANT Аккаунт" class="product-image">
+                <div class="product-badge">
+                    <i class="fas fa-crown"></i> PREMIUM
+                </div>
+            </div>
+
+            <div class="price-section">
+                <div>
+                    <span class="price-tag">2 499 ₽</span>
+                    <span class="old-price">4 999 ₽</span>
+                </div>
+                <span class="discount">
+                    <i class="fas fa-tag"></i> -50%
+                </span>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="addToCart('VALORANT Премиум', 2499, 'https://avatars.mds.yandex.net/i?id=2c8a94d57493815b541a218ab8f2b31dbc317967-5345438-images-thumbs&n=13')">
+                    <i class="fas fa-shopping-cart"></i>
+                    Купить сейчас
+                </button>
+                <button class="btn btn-secondary" onclick="addToWishlist('VALORANT Премиум')">
+                    <i class="fas fa-heart"></i>
+                    В избранное
+                </button>
+            </div>
+
+            <!-- Краткие характеристики в сетке -->
+            <div class="specs-grid">
+                <div class="spec-item" onclick="showNotification('Уровень аккаунта: 50+')">
+                    <div class="spec-icon">
+                        <i class="fas fa-level-up-alt"></i>
+                    </div>
+                    <div class="spec-value">50+</div>
+                    <div class="spec-label">Уровень</div>
+                </div>
+                <div class="spec-item" onclick="showNotification('Количество скинов: 15+')">
+                    <div class="spec-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="spec-value">15+</div>
+                    <div class="spec-label">Скины</div>
+                </div>
+                <div class="spec-item" onclick="showNotification('Игровая валюта: 3 500+ VP')">
+                    <div class="spec-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="spec-value">3 500+</div>
+                    <div class="spec-label">VP</div>
+                </div>
+                <div class="spec-item" onclick="showNotification('Ранг: Platinum 2')">
+                    <div class="spec-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="spec-value">Platinum 2</div>
+                    <div class="spec-label">Ранг</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подробное описание -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-info-circle"></i>
+                Описание товара
+            </h2>
+            <div class="description-box">
+                <p>✨ <strong>Премиум аккаунт VALORANT</strong> с высоким уровнем прокачки, редкими скинами и полным доступом ко всем игровым возможностям. Идеальный старт для серьезного игрока!</p>
+                
+                <p>🎮 Аккаунт включает в себя эксклюзивные предметы, которые больше не доступны в магазине игры, а также значительное количество игровой валюты для дальнейших покупок.</p>
+                
+                <p>🔒 Аккаунт полностью готов к использованию, все данные могут быть заменены на ваши. Гарантия безопасности и чистой истории.</p>
+                
+                <h3>🎯 Игровой прогресс</h3>
+                <p>Аккаунт был создан в 2021 году и активно развивался в течение нескольких сезонов. Ранг Platinum 2 подтверждает высокий уровень навыков аккаунта и позволяет сразу играть в competitive-режиме с достойными соперниками.</p>
+                
+                <h3>🌟 Коллекционные предметы</h3>
+                <p>Включает скины из первых боевых пропусков: Prime Vandal, Reaver Operator, Ion Phantom, Glitchpop Classic и эксклюзивные предложения магазина, которые больше не доступны для покупки.</p>
+            </div>
+        </div>
+
+        <!-- Характеристики -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-list"></i>
+                Характеристики товара
+            </h2>
+            
+            <div class="table-container">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Параметр</th>
+                            <th>Значение</th>
+                            <th>Примечание</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="showNotification('Уровень аккаунта: 50+')">
+                            <td><i class="fas fa-level-up-alt" style="color: #4da8ff; margin-right: 10px;"></i>Уровень аккаунта</td>
+                            <td><strong>50+</strong></td>
+                            <td>Высокий уровень прокачки</td>
+                        </tr>
+                        <tr onclick="showNotification('Количество скинов: 15+')">
+                            <td><i class="fas fa-paint-brush" style="color: #4da8ff; margin-right: 10px;"></i>Количество скинов</td>
+                            <td><strong>15+</strong></td>
+                            <td>Включая редкие коллекции</td>
+                        </tr>
+                        <tr onclick="showNotification('Редкие скины: Prime Vandal, Reaver Operator, Ion Phantom, Glitchpop Classic')">
+                            <td><i class="fas fa-gem" style="color: #4da8ff; margin-right: 10px;"></i>Редкие скины</td>
+                            <td colspan="2">Prime Vandal, Reaver Operator, Ion Phantom, Glitchpop Classic</td>
+                        </tr>
+                        <tr onclick="showNotification('Игровая валюта: 3 500+ VP')">
+                            <td><i class="fas fa-coins" style="color: #4da8ff; margin-right: 10px;"></i>Игровая валюта (VP)</td>
+                            <td><strong>3 500+</strong></td>
+                            <td>Доступно для траты</td>
+                        </tr>
+                        <tr onclick="showNotification('Разблокированы все агенты')">
+                            <td><i class="fas fa-users" style="color: #4da8ff; margin-right: 10px;"></i>Разблокированные агенты</td>
+                            <td><strong>Все</strong></td>
+                            <td>Полный доступ к персонажам</td>
+                        </tr>
+                        <tr onclick="showNotification('Ранг: Platinum 2')">
+                            <td><i class="fas fa-trophy" style="color: #4da8ff; margin-right: 10px;"></i>Ранг</td>
+                            <td><strong>Platinum 2</strong></td>
+                            <td>Высокий уровень игры</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Преимущества -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-star"></i>
+                Почему выбирают нас
+            </h2>
+            
+            <div class="features-grid">
+                <div class="feature-card" onclick="showNotification('Гарантия смены всех данных и привязка к вашему email')">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-title">Полная безопасность</div>
+                    <div class="feature-text">Гарантия смены всех данных и привязка к вашему email</div>
+                </div>
+                
+                <div class="feature-card" onclick="showNotification('Получите данные аккаунта сразу после оплаты')">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="feature-title">Моментальная доставка</div>
+                    <div class="feature-text">Получите данные аккаунта сразу после оплаты</div>
+                </div>
+                
+                <div class="feature-card" onclick="showNotification('Наша служба поддержки всегда готова помочь 24/7')">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="feature-title">Поддержка 24/7</div>
+                    <div class="feature-text">Наша служба поддержки всегда готова помочь</div>
+                </div>
+                
+                <div class="feature-card" onclick="showNotification('Возврат средств или замена аккаунта в течение 90 дней')">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="feature-title">Гарантия 90 дней</div>
+                    <div class="feature-text">Возврат средств или замена аккаунта</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Другие товары -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-gamepad"></i>
+                Вам также может понравиться
+            </h2>
+            
+            <div class="related-products">
+                <div class="related-item" onclick="window.location.href='catalog.html'">
+                    <i class="fas fa-crosshairs" style="font-size: 40px; color: #4da8ff; margin-bottom: 15px;"></i>
+                    <h3>CS:GO Prime аккаунт</h3>
+                    <p style="color: rgba(255,255,255,0.7); margin: 10px 0;">Prime статус, 100+ скинов</p>
+                    <div class="related-price">1 799 ₽</div>
+                </div>
+                
+                <div class="related-item" onclick="window.location.href='catalog.html'">
+                    <i class="fas fa-fort-awesome" style="font-size: 40px; color: #4da8ff; margin-bottom: 15px;"></i>
+                    <h3>Fortnite Макс уровень</h3>
+                    <p style="color: rgba(255,255,255,0.7); margin: 10px 0;">250+ скинов, 25 000+ V-Bucks</p>
+                    <div class="related-price">3 199 ₽</div>
+                </div>
+                
+                <div class="related-item" onclick="window.location.href='catalog.html'">
+                    <i class="fab fa-steam" style="font-size: 40px; color: #4da8ff; margin-bottom: 15px;"></i>
+                    <h3>Steam аккаунт</h3>
+                    <p style="color: rgba(255,255,255,0.7); margin: 10px 0;">50+ игр, уровень 100+</p>
+                    <div class="related-price">4 999 ₽</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Game Store</h3>
+                <p style="color: rgba(255,255,255,0.7);">Магазин игровых аккаунтов с гарантией качества и безопасности</p>
+                <div style="margin-top: 20px;">
+                    <i class="fab fa-discord" style="font-size: 24px; margin-right: 15px; color: #4da8ff; cursor: pointer;" onclick="showNotification('Discord: discord.gg/playstation')"></i>
+                    <i class="fab fa-telegram" style="font-size: 24px; margin-right: 15px; color: #4da8ff; cursor: pointer;" onclick="showNotification('Telegram: @playstation_store')"></i>
+                    <i class="fab fa-vk" style="font-size: 24px; color: #4da8ff; cursor: pointer;" onclick="showNotification('VK: vk.com/playstation_store')"></i>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Навигация</h3>
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="tovary.html">Товары</a>
+                <a href="contacts.html">Контакты</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-envelope" style="color: #4da8ff; margin-right: 10px;"></i> support@playstation.ru</p>
+                <p><i class="fas fa-phone" style="color: #4da8ff; margin-right: 10px;"></i> +7 (999) 123-45-67</p>
+                <p><i class="fas fa-clock" style="color: #4da8ff; margin-right: 10px;"></i> 24/7 поддержка</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2024 Game Store. Все права защищены</p>
+            <p style="font-size: 14px;">Сайт является учебным проектом</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
