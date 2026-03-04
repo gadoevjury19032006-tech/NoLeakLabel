@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameAccounts - Каталог аккаунтов</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="animated-bg"></div>
+    <div class="floating-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+
+ 
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <div class="notification-content">
+            <div class="notification-title" id="notificationTitle">Товар добавлен!</div>
+            <div class="notification-text" id="notificationMessage"></div>
+        </div>
+        <button class="notification-close" onclick="hideNotification()">×</button>
+    </div>
+
+    <div class="cart-counter" id="cartCounter" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartCount">0</span>
+    </div>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+    
+        </div>
+        <div class="cart-total">
+            <span>Итого:</span>
+            <span class="cart-total-price" id="cartTotal">0 ₽</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">
+            <i class="fas fa-credit-card"></i> Оформить заказ
+        </button>
+    </div>
+
+    <header class="header" id="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-gamepad"></i>
+                GameAccounts
+            </a>
+            
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="catalog.html" class="nav-link active">Каталог</a>
+                <a href="tovary.html" class="nav-link">Товары</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+
+        <div class="page-header">
+            <h1 class="page-title">Каталог аккаунтов</h1>
+            <p class="page-subtitle">
+                Более 1000 премиальных аккаунтов для популярных игр и сервисов
+            </p>
+        </div>
+
+        <div class="filters-section">
+            <h3 class="filters-title">
+                <i class="fas fa-filter" style="margin-right: 10px; color: #ff6b6b;"></i>
+                Фильтр по играм:
+            </h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProducts('all')">Все игры</button>
+                <button class="filter-btn" onclick="filterProducts('valorant')">VALORANT</button>
+                <button class="filter-btn" onclick="filterProducts('csgo')">CS:GO</button>
+                <button class="filter-btn" onclick="filterProducts('steam')">Steam</button>
+                <button class="filter-btn" onclick="filterProducts('fortnite')">Fortnite</button>
+            </div>
+        </div>
+
+        <div class="catalog-grid" id="catalogGrid">
+            <div class="product-card" data-game="valorant">
+                <div class="product-badge">Хит продаж</div>
+                <div class="product-img-wrapper">
+                    <img src="https://avatars.mds.yandex.net/i?id=b27622d00f3923eae7774f310f9e45b8-4012518-images-thumbs&n=13" 
+                         alt="VALORANT Аккаунт" class="product-img">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fas fa-crosshairs"></i> VALORANT
+                    </span>
+                    <h3 class="product-title">VALORANT Премиум</h3>
+                    <p class="product-description">
+                        Уровень 50+, 15+ редких скинов, все агенты, 3 500+ VP
+                    </p>
+                    <div class="product-footer">
+                        <span class="product-price">2 499 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('VALORANT Премиум', 2499, 'https://avatars.mds.yandex.net/i?id=b27622d00f3923eae7774f310f9e45b8-4012518-images-thumbs&n=13')">
+                            <i class="fas fa-shopping-cart"></i>
+                            В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-game="csgo">
+                <div class="product-badge">-30%</div>
+                <div class="product-img-wrapper">
+                    <img src="https://images.cybersport.ru/images/og-jpg/plain/f9/f958daf2-c591-4c0e-9873-cad481d2da4a.jpg" 
+                         alt="CS:GO Аккаунт" class="product-img">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fas fa-skull"></i> CS:GO
+                    </span>
+                    <h3 class="product-title">CS:GO Prime LEAGUE</h3>
+                    <p class="product-description">
+                        Global Elite, 100+ скинов, Prime статус, 10 000+ часов
+                    </p>
+                    <div class="product-footer">
+                        <span class="product-price">3 799 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('CS:GO Prime LEAGUE', 3799, 'https://images.cybersport.ru/images/og-jpg/plain/f9/f958daf2-c591-4c0e-9873-cad481d2da4a.jpg')">
+                            <i class="fas fa-shopping-cart"></i>
+                            В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-game="steam">
+                <div class="product-badge">Топ</div>
+                <div class="product-img-wrapper">
+                    <img src="https://avatars.mds.yandex.net/i?id=b7f71f1dd6e201be84252f4d4c6525eb1a9ef1f8-12523300-images-thumbs&n=13" 
+                         alt="Steam Аккаунт" class="product-img">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fab fa-steam"></i> Steam
+                    </span>
+                    <h3 class="product-title">Steam Premium Collection</h3>
+                    <p class="product-description">
+                        150+ игр, уровень 100+, 5 000+ карт, редкие предметы
+                    </p>
+                    <div class="product-footer">
+                        <span class="product-price">12 999 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('Steam Premium Collection', 12999, 'https://avatars.mds.yandex.net/i?id=b7f71f1dd6e201be84252f4d4c6525eb1a9ef1f8-12523300-images-thumbs&n=13')">
+                            <i class="fas fa-shopping-cart"></i>
+                            В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-game="fortnite">
+                <div class="product-badge">Новинка</div>
+                <div class="product-img-wrapper">
+                    <img src="https://avatars.mds.yandex.net/i?id=c32de459352b870b44931f54dc4dfbad82dbb4f7-11454708-images-thumbs&n=13" 
+                         alt="Fortnite Аккаунт" class="product-img">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fas fa-fort-awesome"></i> Fortnite
+                    </span>
+                    <h3 class="product-title">Fortnite MAX Edition</h3>
+                    <p class="product-description">
+                        MAX уровень, 250+ скинов, 25 000+ V-Bucks, все боевые пропуски
+                    </p>
+                    <div class="product-footer">
+                        <span class="product-price">5 499 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('Fortnite MAX Edition', 5499, 'https://avatars.mds.yandex.net/i?id=c32de459352b870b44931f54dc4dfbad82dbb4f7-11454708-images-thumbs&n=13')">
+                            <i class="fas fa-shopping-cart"></i>
+                            В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-game="valorant">
+                <div class="product-badge">Редкий</div>
+                <div class="product-img-wrapper">
+                    <img src="https://avatars.mds.yandex.net/i?id=2c8a94d57493815b541a218ab8f2b31dbc317967-5345438-images-thumbs&n=13" 
+                         alt="VALORANT Аккаунт" class="product-img">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fas fa-crosshairs"></i> VALORANT
+                    </span>
+                    <h3 class="product-title">VALORANT Pro Pack</h3>
+                    <p class="product-description">
+                        Ранг Immortal, 30+ скинов, все агенты, 10 000+ VP
+                    </p>
+                    <div class="product-footer">
+                        <span class="product-price">6 999 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('VALORANT Pro Pack', 6999, 'https://avatars.mds.yandex.net/i?id=2c8a94d57493815b541a218ab8f2b31dbc317967-5345438-images-thumbs&n=13')">
+                            <i class="fas fa-shopping-cart"></i>
+                            В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-game="csgo">
+                <div class="product-badge">Премиум</div>
+                <div class="product-img-wrapper">
+                    <img src="https://images.cybersport.ru/images/og-jpg/plain/49/49703a27-97fb-4496-a068-3d9a5eaab437.jpg" 
+                         alt="CS:GO Аккаунт" class="product-img">
+                    <div class="product-overlay"></div>
+                </div>
+                <div class="product-content">
+                    <span class="product-category">
+                        <i class="fas fa-skull"></i> CS:GO
+                    </span>
+                    <h3 class="product-title">CS:GO с ножами</h3>
+                    <p class="product-description">
+                        5 редких ножей, Dragon Lore, Howl, Prime статус
+                    </p>
+                    <div class="product-footer">
+                        <span class="product-price">15 999 ₽</span>
+                        <button class="buy-btn" onclick="addToCart('CS:GO с ножами', 15999, 'https://images.cybersport.ru/images/og-jpg/plain/49/49703a27-97fb-4496-a068-3d9a5eaab437.jpg')">
+                            <i class="fas fa-shopping-cart"></i>
+                            В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-bar" style="margin-right: 15px; color: #ff6b6b;"></i>
+                Сравнение популярных аккаунтов
+            </h2>
+            
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Параметр</th>
+                            <th>VALORANT</th>
+                            <th>CS:GO</th>
+                            <th>Steam</th>
+                            <th>Fortnite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Цена</td>
+                            <td>2 499 ₽</td>
+                            <td>3 799 ₽</td>
+                            <td>12 999 ₽</td>
+                            <td>5 499 ₽</td>
+                        </tr>
+                        <tr>
+                            <td>Коллекция</td>
+                            <td>15+ скинов</td>
+                            <td>100+ скинов</td>
+                            <td>150+ игр</td>
+                            <td>250+ скинов</td>
+                        </tr>
+                        <tr>
+                            <td>Ранг/Уровень</td>
+                            <td>Platinum 2</td>
+                            <td>Global Elite</td>
+                            <td>Уровень 100+</td>
+                            <td>MAX уровень</td>
+                        </tr>
+                        <tr>
+                            <td>Гарантия</td>
+                            <td>90 дней</td>
+                            <td>90 дней</td>
+                            <td>180 дней</td>
+                            <td>90 дней</td>
+                        </tr>
+                        <tr>
+                            <td>Внутриигровая валюта</td>
+                            <td>3 500 VP</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>25 000 V-Bucks</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="benefits-section">
+            <h2 class="section-title">
+                <i class="fas fa-star" style="margin-right: 15px; color: #ffd93d;"></i>
+                Наши преимущества
+            </h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Безопасность</h3>
+                    <p>Гарантия смены всех данных и защита вашей конфиденциальности</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Моментальная доставка</h3>
+                    <p>Получите данные аккаунта сразу после оплаты</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Поддержка 24/7</h3>
+                    <p>Круглосуточная поддержка клиентов</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Гарантия 90 дней</h3>
+                    <p>Возврат средств или замена аккаунта</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GameAccounts</h3>
+                <p>Магазин игровых аккаунтов с гарантией качества и безопасности</p>
+                <div class="social-links">
+                    <a href="#" onclick="showNotification('Discord: discord.gg/gameaccounts')"><i class="fab fa-discord"></i></a>
+                    <a href="#" onclick="showNotification('Telegram: @gameaccounts')"><i class="fab fa-telegram"></i></a>
+                    <a href="#" onclick="showNotification('VK: vk.com/gameaccounts')"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Навигация</h3>
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="tovary.html">Товары</a>
+                <a href="contacts.html">Контакты</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-envelope" style="color: #ff6b6b; margin-right: 10px;"></i> support@gamestore.ru</p>
+                <p><i class="fas fa-phone" style="color: #4ecdc4; margin-right: 10px;"></i> +7 (999) 123-45-67</p>
+                <p><i class="fas fa-clock" style="color: #ffd93d; margin-right: 10px;"></i> 24/7 поддержка</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2024 GameAccounts Store. Все права защищены</p>
+            <p style="font-size: 14px;">Сайт является учебным проектом</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
